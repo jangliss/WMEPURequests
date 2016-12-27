@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                WMEPURequests
 // @namespace           http://tampermonkey.net/
-// @version             0.0.1
+// @version             0.0.2
 // @description         try to take over the world!
 // @author              Jonathan Angliss
 // @include             https://www.waze.com/*editor/*
@@ -58,9 +58,9 @@ var WMEPUR;
 		var address = venue.getAddress().attributes;
 		
 		fullAddress["HN"] = venue.attributes.houseNumber;
-		fullAddress["Street"] = address.street && address.street.name || "No Street";
-		fullAddress["City"] = address.city && address.city.attributes.name || "No City";
-		fullAddress["State"] = address.state && address.state.name || "No State";
+		fullAddress["Street"] = address.street && address.street.name || "";
+		fullAddress["City"] = address.city && address.city.attributes.name || "";
+		fullAddress["State"] = address.state && address.state.name || "";
 		
 		return fullAddress;
 	}
@@ -138,7 +138,7 @@ var WMEPUR;
 			console.log("WMEPUR: No venues pending updates");
 		} else {
 			var lineArray = [];
-			var columnArray = ["data:text/csv;charset=utf-8,Name","House Number","Street","City","State","Permalink","UpdateCount","OldestUpdate"];
+			var columnArray = ["data:text/csv;charset=utf-8,Name","House Number","Street","City","State","New Place","Residential","Lock Level","Permalink","UpdateCount","OldestUpdate"];
 			lineArray.push(columnArray);
 			fileName = "PlaceUpdateReqs.csv";
 			
@@ -152,10 +152,13 @@ var WMEPUR;
 					
 				var lUpdate = new Date(mVenue.attributes.venueUpdateRequests[0].attributes.dateAdded);
 				
-				columnArray = ["\"" + mVenue.attributes.name + "\"", "\"" + venueAddy.HN + "\""];
+				columnArray = ["\"" + mVenue.attributes.name + "\"", "\"" + (venueAddy.HN || "") + "\""];
 				columnArray.push("\"" + venueAddy.Street + "\"");
 				columnArray.push("\"" + venueAddy.City + "\"");
 				columnArray.push("\"" + venueAddy.State + "\"");
+				columnArray.push("\"" + (mVenue.attributes.venueUpdateRequests[0].attributes.updateType == "ADD_VENUE" ? "True" : "False") + "\"");
+				columnArray.push("\"" + mVenue.attributes.residential + "\"");
+				columnArray.push("\"" + (mVenue.attributes.lockRank + 1) + "\"");
 				columnArray.push("\"" + pl + "\"");
 				columnArray.push("\"" + mVenue.attributes.venueUpdateRequests.length.toString() + "\"");
 				columnArray.push("\"" + reformatDate(lUpdate) + "\"");
