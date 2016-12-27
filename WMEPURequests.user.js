@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                WMEPURequests
 // @namespace           http://tampermonkey.net/
-// @version             0.0.2
+// @version             0.0.3
 // @description         try to take over the world!
 // @author              Jonathan Angliss
 // @include             https://www.waze.com/*editor/*
@@ -10,7 +10,7 @@
 // @grant        none
 // ==/UserScript==
 
-debugger;
+//debugger;
 
 var WMEPUR;
 (function (WMEPUR) {
@@ -81,8 +81,8 @@ var WMEPUR;
 		var x = 0;
 		var y = 0;
 		if (isNaN(geo.x) || isNaN(geo.y)) {
-			x = geo.bounds.centerLonLat.lat;
-			y = geo.bounds.centerLonLat.lon;
+			x = geo.bounds.centerLonLat.lon;
+			y = geo.bounds.centerLonLat.lat;
 		} else {
 			x = geo.x;
 			y = geo.y;
