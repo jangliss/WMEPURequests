@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                WMEPURequests
 // @namespace           http://tampermonkey.net/
-// @version             0.0.4
+// @version             0.0.5
 // @description         try to take over the world!
 // @author              Jonathan Angliss
 // @include             https://www.waze.com/*editor/*
@@ -139,8 +139,8 @@ var WMEPUR;
         addon.className = "tab-pane";
         tabContent.appendChild(addon);
 
-        purSplitUpdates = localStorage.purSplitUpdates;
-        purUseUROPlaceOps = localStorage.purUseUROPlaceOps;
+        purSplitUpdates = (localStorage.purSplitUpdates == "true" ? true : false);
+        purUseUROPlaceOps = (localStorage.purUseUROPlaceOps == "true" ? true : false);
 
         $("[id=_purSplitUpdates]")[0].checked = purSplitUpdates;
         $("[id=_purSplitUpdates]")[0].onclick = function() {
@@ -158,8 +158,8 @@ var WMEPUR;
 
     function scanVenues() {
 
-        purSplitUpdates = localStorage.purSplitUpdates;
-        purUseUROPlaceOps = localStorage.purUseUROPlaceOps;
+        purSplitUpdates = (localStorage.purSplitUpdates == "true" ? true : false);
+        purUseUROPlaceOps = (localStorage.purUseUROPlaceOps == "true" ? true : false);
 
         if (purUseUROPlaceOps && (typeof localStorage.UROverviewPlacesOptions !== undefined)) {
             var tmpUROSettings = localStorage.UROverviewPlacesOptions.split(":");
