@@ -41,7 +41,7 @@ var WMEPUR;
                 object = object[path[j]];
                 if (typeof object === "undefined" || object === null) {
                     console.log("WMEPUR:   " + path[j] + " NOT OK");
-                    window.setTimeout(MissingSpeedLimits, 1000);
+                    window.setTimeout(PlaceUpdateReqs, 2000);
                     return;
                 }
             }
