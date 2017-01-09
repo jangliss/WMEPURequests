@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name                WMEPURequests
 // @namespace           http://tampermonkey.net/
-// @version             0.0.5
+// @version             0.0.6
 // @description         try to take over the world!
 // @author              Jonathan Angliss
 // @include             https://www.waze.com/*editor/*
@@ -10,7 +10,7 @@
 // @grant        none
 // ==/UserScript==
 
-//debugger;
+debugger;
 
 var WMEPUR;
 (function (WMEPUR) {
@@ -169,7 +169,10 @@ var WMEPUR;
                         UROPlaceSettings[tmpSplit[0]] = tmpSplit[1];
                     }
                 });
+        } else if (purUseUROPlaceOps && (typeof localStorage.UROverviewPlacesOptions === undefined)) {
+            purUseUROPlaceOps = false;
         }
+
         venueLoop:
         for (var mVenue in Waze.map.placeUpdatesLayer.markers) {
             var venue = Waze.model.venues.get(mVenue);
@@ -178,19 +181,19 @@ var WMEPUR;
             if (purUseUROPlaceOps) {
 
                 //if (UROPlaceSettings[_cbFilterPrivatePlaces]  == "true" && venue.attributes.residential) {
-                if ($("[id='_cbFilterPrivatePlaces']")[0].checked && venue.attributes.residential) {
+                if (($("[id='_cbFilterPrivatePlaces']").length > 0) && $("[id='_cbFilterPrivatePlaces']")[0].checked && venue.attributes.residential) {
                     continue;
                 }
 
                 // Skip as uneditable //
                 // if (UROPlaceSettings[_cbFilterUneditablePlaceUpdates] == "true" && venue.attributes.lockRank > Waze.loginManager.user.rank) {
-                if ($("[id='_cbFilterUneditablePlaceUpdates']")[0].checked  && venue.attributes.lockRank > Waze.loginManager.user.rank) {
+                if (($("[id='_cbFilterUneditablePlaceUpdates']").length > 0) && $("[id='_cbFilterUneditablePlaceUpdates']")[0].checked  && venue.attributes.lockRank > Waze.loginManager.user.rank) {
                     continue;
                 }
 
                 // Adlocked //
                 // if (UROPlaceSettings[_cbHidePlacesAdLocked] == "true" && venue.attributes.adLocked) {
-                if ($("[id='_cbHidePlacesAdLocked']")[0].checked && venue.attributes.adLocked) {
+                if (($("[id='_cbHidePlacesAdLocked']").length > 0) && $("[id='_cbHidePlacesAdLocked']")[0].checked && venue.attributes.adLocked) {
                     continue;
                 }
 
@@ -200,7 +203,7 @@ var WMEPUR;
                     for(var catIDX = 0; catIDX < venue.attributes.categories.length; catIDX++) {
                         var tCat = venue.attributes.categories[catIDX];
                         var tKey = "_cbPlacesFilter-" + tCat;
-                        if ($("[id='" + tKey + "']")[0].checked) {
+                        if (($("[id='" + tKey + "']").length > 0) && $("[id='" + tKey + "']")[0].checked) {
                         //if (UROPlaceSettings[tKey] == "true") {
                             continue venueLoop;
                         }
