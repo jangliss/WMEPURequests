@@ -1,12 +1,10 @@
 // ==UserScript==
 // @name                WMEPURequests
 // @namespace           http://tampermonkey.net/
-// @version             0.0.6
+// @version             0.0.7
 // @description         try to take over the world!
 // @author              Jonathan Angliss
-// @include             https://www.waze.com/*editor/*
-// @include             https://editor-beta.waze.com/*editor/*
-// @exclude             https://www.waze.com/*user/editor/*
+// @include             /^https:\/\/(www|beta)\.waze\.com\/(?!user\/)(.{2,6}\/)?editor.*$/
 // @grant        none
 // ==/UserScript==
 
